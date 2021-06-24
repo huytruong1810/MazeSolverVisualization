@@ -1,0 +1,11 @@
+VBox {
+    -fx-spacing: 8;
+    -fx-padding: 10;
+    -fx-background-color: rgb(199, 199, 204);
+}
+
+.text {
+    -fx-font: 18px "Prismatic";
+    -fx-font-weight: bold;
+    -fx-fill: rgb(28, 28, 30);
+}
