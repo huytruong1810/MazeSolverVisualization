@@ -21,7 +21,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Deep Reinforce" target="16" />
-      <module name="MazeSolverVisualization" target="16" />
+      <module name="MazeSolverVisualization" target="14" />
     </bytecodeTargetLevel>
   </component>
 </project>
