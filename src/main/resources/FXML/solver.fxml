@@ -19,7 +19,7 @@
         <Button text="Activate" onAction="#activateSolver"/>
     </HBox>
     <HBox>
-        <Label text="Agent Speed:"/>
+        <Label text="50 is fastest, 1000 is slowest:"/>
         <Slider fx:id="speedSlider" blockIncrement="50" min="50" max="1000" value="100" showTickLabels="true"/>
     </HBox>
     <HBox>

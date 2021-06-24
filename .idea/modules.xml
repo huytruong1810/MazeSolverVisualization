@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Deep Reinforce.iml" filepath="$PROJECT_DIR$/Deep Reinforce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MazeSolverVisualization.iml" filepath="$PROJECT_DIR$/MazeSolverVisualization.iml" />
     </modules>
   </component>
 </project>
