@@ -15,6 +15,7 @@ public class DFS extends Solver {
     protected ArrayList<MazeCell> solve() {
 
         ArrayList<MazeCell> path = new ArrayList<>();
+        solution.put(maze.getEnter(), null);
         step(maze.getEnter(), path);
 
         return path;
@@ -31,7 +32,10 @@ public class DFS extends Solver {
         }
         for (MazeCell neighbor : maze.getNeighbor(x, y)) {
             if (!visited[neighbor.x()][neighbor.y()]) {
-                if (!found) step(neighbor, path);
+                if (!found) {
+                    solution.put(neighbor, cell);
+                    step(neighbor, path);
+                }
                 else break;
             }
         }

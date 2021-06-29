@@ -4,23 +4,22 @@ import Maze.Maze;
 import Maze.MazeCell;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class Solver {
 
     private double solvingTime;
-
     protected Maze maze;
     protected int W, H;
     protected boolean found;
     protected boolean[][] visited;
+    protected HashMap<MazeCell, MazeCell> solution;
 
     public Solver(Maze m) {
 
         W = m.getWidth();
         H = m.getHeight();
-        found = false;
         maze = m;
-        visited = new boolean[W][H];
         reset();
 
     }
@@ -33,7 +32,23 @@ public abstract class Solver {
         return solvingTime;
     }
 
+    public ArrayList<MazeCell> getSolution() {
+        ArrayList<MazeCell> solutionPath = new ArrayList<>();
+        if (found) {
+            MazeCell cur = maze.getExit();
+            while (cur != null) {
+                solutionPath.add(cur);
+                cur = solution.get(cur);
+            }
+        }
+        return solutionPath;
+    }
+
     protected void reset() {
+        found = false;
+        solution = new HashMap<>();
+        visited = new boolean[W][H];
+        solvingTime = -1.0;
         for (int i = 0; i < W; ++i) for (int j = 0; j < H; ++j) visited[i][j] = false;
     }
 

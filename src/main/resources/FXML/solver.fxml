@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.RadioButton?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="Controllers.SolverController"
@@ -33,6 +34,12 @@
     <HBox>
         <Label text="Cell visited:"/>
         <Label fx:id="cellVisitedLabel" text="N/A"/>
+    </HBox>
+    <HBox>
+        <Label text="Overlays:"/>
+        <RadioButton fx:id="explorationRadio" text="Exploration Path"/>
+        <RadioButton fx:id="solutionRadio" text="Solution Path"/>
+        <Button fx:id="overlayButton" text="Apply" onAction="#applyOverlays"/>
     </HBox>
 
     <ScrollPane>

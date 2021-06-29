@@ -16,6 +16,7 @@ public class BFS extends Solver {
 
         ArrayList<MazeCell> path = new ArrayList<>();
         ArrayList<MazeCell> queue = new ArrayList<>(){{add(maze.getEnter());}};
+        solution.put(maze.getEnter(), null);
 
         while (!queue.isEmpty()) {
             MazeCell cell = queue.remove(0);
@@ -27,7 +28,10 @@ public class BFS extends Solver {
                 break;
             }
             for (MazeCell neighbor : maze.getNeighbor(x, y))
-                if (!visited[neighbor.x()][neighbor.y()]) queue.add(neighbor);
+                if (!visited[neighbor.x()][neighbor.y()]) {
+                    solution.put(neighbor, cell);
+                    queue.add(neighbor);
+                }
         }
 
         return path;

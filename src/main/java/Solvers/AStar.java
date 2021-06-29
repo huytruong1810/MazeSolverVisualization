@@ -32,6 +32,7 @@ public class AStar extends Solver {
         ArrayList<MazeCell> path = new ArrayList<>();
         PriorityQueue<ScoredCell> priorityQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.score));
         priorityQueue.add(new ScoredCell(maze.getEnter(), 0));
+        solution.put(maze.getEnter(), null);
 
         while (!priorityQueue.isEmpty()) {
             ScoredCell scoredCell = priorityQueue.poll();
@@ -43,7 +44,10 @@ public class AStar extends Solver {
                 break;
             }
             for (MazeCell neighbor : maze.getNeighbor(x, y))
-                if (!visited[neighbor.x()][neighbor.y()]) priorityQueue.add(new ScoredCell(neighbor, scoredCell.depth + 1));
+                if (!visited[neighbor.x()][neighbor.y()]) {
+                    solution.put(neighbor, scoredCell.cell);
+                    priorityQueue.add(new ScoredCell(neighbor, scoredCell.depth + 1));
+                }
         }
 
         return path;

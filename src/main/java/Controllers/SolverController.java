@@ -9,9 +9,7 @@ import Solvers.Solver;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -30,13 +28,19 @@ public class SolverController implements Initializable {
     private Stage primaryStage;
     private Maze maze;
     private double half, oneFourth;
+    private ArrayList<Shape> explorationShapes, solutionShapes;
 
     @FXML private AnchorPane rootPane;
     @FXML private Slider speedSlider;
     @FXML private ComboBox<String> solverMenu;
+    @FXML private Button overlayButton;
+    @FXML private RadioButton explorationRadio, solutionRadio;
     @FXML private Label solvableLabel, timeLabel, cellVisitedLabel;
 
     @Override public void initialize(URL url, ResourceBundle resourceBundle) {
+        explorationRadio.setVisible(false);
+        solutionRadio.setVisible(false);
+        overlayButton.setVisible(false);
         solverMenu.getItems().addAll("DFS", "BFS", "A*");
         solverMenu.getSelectionModel().selectFirst();
     }
@@ -45,7 +49,21 @@ public class SolverController implements Initializable {
         primaryStage.close();
     }
 
+    public void applyOverlays() {
+        if (explorationRadio.isSelected()) {
+            for (Shape shape : explorationShapes) if (!rootPane.getChildren().contains(shape)) rootPane.getChildren().add(shape);
+        }
+        else for (Shape shape : explorationShapes) rootPane.getChildren().remove(shape);
+        if (solutionRadio.isSelected()) {
+            for (Shape shape : solutionShapes) if (!rootPane.getChildren().contains(shape)) rootPane.getChildren().add(shape);
+        }
+        else for (Shape shape : solutionShapes) rootPane.getChildren().remove(shape);
+    }
+
     public void activateSolver() {
+
+        explorationShapes = new ArrayList<>();
+        solutionShapes = new ArrayList<>();
 
         drawMaze(rootPane, maze, D);
 
@@ -85,6 +103,8 @@ public class SolverController implements Initializable {
                 marker.setFill(Color.GREENYELLOW);
                 jumpMarker.setFill(Color.DARKRED);
                 prevRects.add(marker);
+                explorationShapes.add(jumpMarker);
+                explorationShapes.add(marker);
                 rootPane.getChildren().addAll(jumpMarker, marker);
 
                 FadeTransition jumpFill = new FadeTransition(Duration.millis(50), jumpMarker);
@@ -100,6 +120,7 @@ public class SolverController implements Initializable {
             }
             marker.setFill(Color.ORANGE);
             prevRects.add(marker);
+            explorationShapes.add(marker);
             rootPane.getChildren().add(marker);
 
             FadeTransition tileFill = new FadeTransition(Duration.millis(50), marker);
@@ -110,6 +131,22 @@ public class SolverController implements Initializable {
         }
         SequentialTransition sequentialTransition = new SequentialTransition();
         sequentialTransition.getChildren().addAll(animations);
+        sequentialTransition.setOnFinished(e -> {
+            explorationRadio.setVisible(true);
+            solutionRadio.setVisible(true);
+            overlayButton.setVisible(true);
+            explorationRadio.setSelected(true);
+            solutionRadio.setSelected(true);
+            ArrayList<MazeCell> solutionPath = solver.getSolution();
+            for (int n = solutionPath.size(), i = n - 1; i > 0; --i) {
+                MazeCell cur = solutionPath.get(i);
+                MazeCell prev = solutionPath.get(i - 1);
+                Polygon arrow = Utils.getArrow(cur, prev, D);
+                arrow.setFill(Color.BLACK);
+                solutionShapes.add(arrow);
+                rootPane.getChildren().add(arrow);
+            }
+        });
         sequentialTransition.play();
 
     }

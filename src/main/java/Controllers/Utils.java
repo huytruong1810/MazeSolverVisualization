@@ -58,4 +58,27 @@ public class Utils {
         return shape;
     }
 
+    public static Polygon getArrow(MazeCell cur, MazeCell next, int D) {
+
+        int x = cur.x(), y = cur.y(), xn = next.x(), yn = next.y();
+        char dir;
+        if (x == xn + 1 && y == yn) dir = 'N';
+        else if (x == xn - 1 && y == yn) dir = 'S';
+        else if (y == yn + 1 && x == xn) dir = 'W';
+        else if (y == yn - 1 && x == xn) dir = 'E';
+        else throw new IllegalStateException("Invalid cur-next input.");
+
+        double y1 = y * D + D / 8.0, y2 = y * D + 7 * D / 8.0, y3 = y * D + D / 2.0;
+        double x1 = x * D + D / 8.0, x2 = x * D + 7 * D / 8.0, x3 = x * D + D / 2.0;
+        double offset = D / 8.0;
+        return switch (dir) {
+            case 'N' -> new Polygon(y1, x * D + D - offset, y2, x * D + D - offset, y3, x * D + offset);
+            case 'S' -> new Polygon(y1, x * D + offset, y2, x * D + offset, y3, x * D + D - offset);
+            case 'E' -> new Polygon(y * D + offset, x1, y * D + offset, x2, y * D + D - offset, x3);
+            case 'W' -> new Polygon(y * D + D - offset, x1, y * D + D - offset, x2, y * D + offset, x3);
+            default -> throw new IllegalStateException("Invalid direction.");
+        };
+
+    }
+
 }
