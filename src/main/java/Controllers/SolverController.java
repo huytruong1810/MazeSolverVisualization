@@ -7,8 +7,10 @@ import Solvers.BFS;
 import Solvers.DFS;
 import Solvers.Solver;
 import javafx.animation.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -28,6 +30,7 @@ public class SolverController implements Initializable {
     private Stage primaryStage;
     private Maze maze;
     private double half, oneFourth;
+    private SequentialTransition solveAnimation;
     private ArrayList<Shape> explorationShapes, solutionShapes;
 
     @FXML private AnchorPane rootPane;
@@ -50,17 +53,20 @@ public class SolverController implements Initializable {
     }
 
     public void applyOverlays() {
+        ObservableList<Node> children = rootPane.getChildren();
         if (explorationRadio.isSelected()) {
-            for (Shape shape : explorationShapes) if (!rootPane.getChildren().contains(shape)) rootPane.getChildren().add(shape);
+            for (Shape shape : explorationShapes) if (!children.contains(shape)) children.add(shape);
         }
-        else for (Shape shape : explorationShapes) rootPane.getChildren().remove(shape);
+        else for (Shape shape : explorationShapes) children.remove(shape);
         if (solutionRadio.isSelected()) {
-            for (Shape shape : solutionShapes) if (!rootPane.getChildren().contains(shape)) rootPane.getChildren().add(shape);
+            for (Shape shape : solutionShapes) if (!children.contains(shape)) children.add(shape);
         }
-        else for (Shape shape : solutionShapes) rootPane.getChildren().remove(shape);
+        else for (Shape shape : solutionShapes) children.remove(shape);
     }
 
     public void activateSolver() {
+
+        if (solveAnimation != null) solveAnimation.stop();
 
         explorationShapes = new ArrayList<>();
         solutionShapes = new ArrayList<>();
@@ -129,9 +135,9 @@ public class SolverController implements Initializable {
             animations.add(tileFill);
 
         }
-        SequentialTransition sequentialTransition = new SequentialTransition();
-        sequentialTransition.getChildren().addAll(animations);
-        sequentialTransition.setOnFinished(e -> {
+        solveAnimation = new SequentialTransition();
+        solveAnimation.getChildren().addAll(animations);
+        solveAnimation.setOnFinished(e -> {
             explorationRadio.setVisible(true);
             solutionRadio.setVisible(true);
             overlayButton.setVisible(true);
@@ -142,12 +148,12 @@ public class SolverController implements Initializable {
                 MazeCell cur = solutionPath.get(i);
                 MazeCell prev = solutionPath.get(i - 1);
                 Polygon arrow = Utils.getArrow(cur, prev, D);
-                arrow.setFill(Color.BLACK);
+                arrow.setFill(Color.GREEN);
                 solutionShapes.add(arrow);
                 rootPane.getChildren().add(arrow);
             }
         });
-        sequentialTransition.play();
+        solveAnimation.play();
 
     }
 
