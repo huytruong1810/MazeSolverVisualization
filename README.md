@@ -6,7 +6,7 @@
 An application that visualizes how diffrent graph search algorithm solve custom maze.
 
 Client can custom make their maze (height, width, enter/exit point) using this UI. Maze is built using a DFS-based algorithm.
-![Build Maze screen](src/main/resources/images/buildMazeUI.JPG)
+![Build Maze screen](src/main/resources/images/buildMazeUI.jpg)
 
 After a custom maze is built, this maze can be piped to the solvers where users can choose between different available solvers to see how each of them perfrom on the maze.
 ![Pick Solver screen](src/main/resources/images/pickSolverUI.JPG)
