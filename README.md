@@ -12,7 +12,7 @@ After a custom maze is built, this maze can be piped to the solvers where users 
 ![Pick Solver screen](src/main/resources/images/pickSolverUI.jpg)
 
 This application provides a solving animation and resulting stats of the selected solver.
-![Snapshot of Solving Animation screen](src/main/resources/images/pickSolverUI.jpg)
+![Snapshot of Solving Animation screen](src/main/resources/images/midSolvingUI.jpg)
 
 This application also allows the client to apply 2 overlay views: exploration path of the agent and true solution path. Below is only the solution path being displayed:
 ![A* Solution screen](src/main/resources/images/solutionUI.jpg)
