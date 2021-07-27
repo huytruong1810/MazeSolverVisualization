@@ -9,10 +9,10 @@ Client can custom make their maze (height, width, enter/exit point) using this U
 ![Build Maze screen](src/main/resources/images/buildMazeUI.jpg)
 
 After a custom maze is built, this maze can be piped to the solvers where users can choose between different available solvers to see how each of them perfrom on the maze.
-![Pick Solver screen](src/main/resources/images/pickSolverUI.JPG)
+![Pick Solver screen](src/main/resources/images/pickSolverUI.jpg)
 
 This application provides a solving animation and resulting stats of the selected solver.
-![Snapshot of Solving Animation screen](src/main/resources/images/pickSolverUI.JPG)
+![Snapshot of Solving Animation screen](src/main/resources/images/pickSolverUI.jpg)
 
 This application also allows the client to apply 2 overlay views: exploration path of the agent and true solution path. Below is only the solution path being displayed:
-![A* Solution screen](src/main/resources/images/solutionUI.JPG)
+![A* Solution screen](src/main/resources/images/solutionUI.jpg)
